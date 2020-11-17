@@ -1,5 +1,5 @@
 <?php
-define(DB_NAME, 'YOUR_FILE_PATH_HERE');
+define(DB_NAME, 'data/db.txt');
 
 // Get Content From File
 function contentGet()
@@ -146,4 +146,26 @@ function deleteStudent($id)
         $i++;
     }
     contentPut($students);
+}
+
+// Error Messages
+function errorMessge($error)
+{
+    switch ($error) {
+        case '1':
+            $message = "Duplicate Roll Number!";
+            break;
+
+        case '2':
+            $message = "Seeding Done!";
+            break;
+        case '3':
+            $message = "Something is wrong!";
+            break;
+
+        default:
+            $message = '';
+            break;
+    }
+   return $message;
 }

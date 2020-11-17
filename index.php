@@ -45,30 +45,12 @@ if (isset($_POST['submit'])) {
         }
     }
 }
-
-// Error Messages
-switch ($error) {
-    case '1':
-        $message = "Duplicate Roll Number!";
-        break;
-
-    case '2':
-        $message = "Seeding Done!";
-        break;
-    case '3':
-        $message = "Something is wrong!";
-        break;
-
-    default:
-        $message = '';
-        break;
-}
 ?>
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title> CRUD Project</title>
+    <title>CRUD Project</title>
     <meta name="description" content="The HTML5 Herald">
     <meta name="author" content="Md Mehedi Hasan">
     <!-- Google Fonts -->
@@ -82,18 +64,18 @@ switch ($error) {
     <div class="container">
         <div class="row">
             <div class="column column-60 column-offset-20">
-                <h2>Project 2 - CRUD</h2>
-                <p>A sample project to perform CRUD operations using plain files and PHp</p>
+                <h2>Project Name: CRUD</h2>
+                <p>A sample project to perform CRUD operations using plain file and PHP</p>
                 <?php include_once 'inc/templates/nav.php';?>
             </div>
         </div>
     </div>
 
-    <?php if ($message != ''): ?>
+    <?php if (errorMessge($error) != ''): ?>
     <div class="container">
         <div class="row">
             <div class="column column-60 column-offset-20">
-            <?php echo "<blockquote> {$message} </blockquote>"; ?>
+            <?php echo "<blockquote>" . errorMessge($error) . "</blockquote>"; ?>
             </div>
         </div>
     </div>
@@ -129,30 +111,30 @@ switch ($error) {
 
 
     <?php
-    if ('edit' == $task):
-        $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_STRING);
-        $student = getStudent($id);
-        if ($student): ?>
-            <div class="container">
-                <div class="row">
-                    <div class="column column-60 column-offset-20">
-                        <form action="/?task=add" method="POST">
-                            <input type="hidden" value="<?php echo $id; ?>" name="id">
-                            <label for="fname">First Name</label>
-                            <input type="text" name="fname" value="<?php echo $student['fname']; ?>">
-                            <label for="lname">Last Name</label>
-                            <input type="text" name="lname" value="<?php echo $student['lname']; ?>">
-                            <label for="roll">Roll</label>
-                            <input type="number" name="roll" value="<?php echo $student['roll']; ?>">
-                            <button type="submit" name="submit"> Update </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        <?php 
-        endif;
-    endif;
-    ?>
+if ('edit' == $task):
+    $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_STRING);
+    $student = getStudent($id);
+    if ($student): ?>
+	            <div class="container">
+	                <div class="row">
+	                    <div class="column column-60 column-offset-20">
+	                        <form action="/?task=add" method="POST">
+	                            <input type="hidden" value="<?php echo $id; ?>" name="id">
+	                            <label for="fname">First Name</label>
+	                            <input type="text" name="fname" value="<?php echo $student['fname']; ?>">
+	                            <label for="lname">Last Name</label>
+	                            <input type="text" name="lname" value="<?php echo $student['lname']; ?>">
+	                            <label for="roll">Roll</label>
+	                            <input type="number" name="roll" value="<?php echo $student['roll']; ?>">
+	                            <button type="submit" name="submit"> Update </button>
+	                        </form>
+	                    </div>
+	                </div>
+	            </div>
+	        <?php
+endif;
+endif;
+?>
     <script type="text/javascript" src="assets/js/main.js"></script>
 </body>
 </html>
