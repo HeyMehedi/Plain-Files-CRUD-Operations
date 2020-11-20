@@ -49,17 +49,23 @@ function generateReport()
     ?>
     <table>
         <tr>
-            <th>ID</th>
+            <th>#ID</th>
             <th>Roll</th>
             <th>Name</th>
-            <th>Action</th>
+            <?php if (isRole('admin') || isRole('editor')): ?>
+                <th>Action</th>
+            <?php endif;?>
         </tr>
         <?php foreach ($students as $student): ?>
         <tr>
-            <td><?php printf('#%s', $student['id'])?></td>
-            <td><?php printf('%s %s', $student['fname'], $student['lname'])?></td>
+            <td><?php printf('%s', $student['id'])?></td>
             <td><?php printf('%s', $student['roll'])?></td>
-            <td><?php printf('<a href="/?task=edit&id=%s">Edit</a> | <a class="delete" href="/?task=delete&id=%s">Delete</a>', $student['id'], $student['id']);?></td>
+            <td><?php printf('%s %s', $student['fname'], $student['lname'])?></td>
+            <?php if (isRole('admin')): ?>
+               <td><?php printf('<a href="/?task=edit&id=%s">Edit</a> | <a class="delete" href="/?task=delete&id=%s">Delete</a>', $student['id'], $student['id']);?></td>
+            <?php elseif (isRole('editor')): ?>
+                <td><?php printf('<a href="/?task=edit&id=%s">Edit</a>', $student['id']);?></td>
+            <?php endif;?>
         </tr>
         <?php endforeach;?>
     </table>
@@ -167,5 +173,15 @@ function errorMessge($error)
             $message = '';
             break;
     }
-   return $message;
+    return $message;
+}
+
+// Has Role admin or editor
+function isRole($role)
+{
+    return ($role == $_SESSION['role']);
+}
+function hasPrivilege()
+{
+    return (isRole('admin') || isRole('editor'));
 }
